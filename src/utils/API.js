@@ -14,7 +14,7 @@ export default {
   deleteRequest: function(id) {
     return axios.delete('/api/requests/' + id);
   },
-  saveRequest: function(articleData) {
-    return axios.post('/api/requests', requestData);
+  saveRequest: function(requestData) {
+    return axios.post('/api/requests' + requestData);
   }
 };

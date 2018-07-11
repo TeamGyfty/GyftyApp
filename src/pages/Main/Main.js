@@ -8,43 +8,25 @@ import { Input, TextArea, FormBtn } from '../../components/Form';
 
 class Main extends Component {
   state = {
-    articles: [],
-    queryTerm: '',
-    beginDate: '',
-    endDate: ''
-  };
-
-  getArticles = () => {
-    let query = `${this.state.queryTerm}`;
-    if (this.state.beginDate) {
-      query = `${query}&begin_date=${this.state.beginDate}`;
-    }
-    if (this.state.endDate) {
-      query = `${query}&end_date=${this.state.endDate}`;
-    }
-
-    API.nytSearch(query)
-      .then(res => {
-        console.log(res);
-        this.setState({
-          articles: res.data.response.docs,
-          queryTerm: '',
-          beginDate: '',
-          endDate: ''
-        });
-      })
-      .catch(err => console.log(err));
+    requests: [],
+    name: '',
+    title: '',
+    body: ''
   };
 
  
-  saveArticle = articleInfo => {
-    API.saveArticle(articleInfo)
-      .then(res => {
-        console.log('hey it saved');
+  saveRequest = requestData => {
+    if (this.state.title && this.state.name && this.state.body) {
+      API.saveRequest({
+        title: this.state.title,
+        name: this.state.name,
+        body: this.state.body
       })
-      .catch(err => {
-        console.log(err);
-      })
+        .then(res => this.loadRequests())
+        console.log("request saved")
+
+        .catch(err => console.log(err));
+    }
   }
 
 
@@ -57,68 +39,48 @@ class Main extends Component {
 
   handleFormSubmit = event => {
     event.preventDefault();
-    if (this.state.queryTerm) {
-      this.getArticles();
+    if (this.state.body) {
+      this.saveRequest();
     }
   };
 
   render() {
     return (
+      <Container>
         <Row>
           <Col size="md-3">
             <Jumbotron>
-              <h1>Search for a topic.</h1>
+              <h1>Find a Gyft!</h1>
             </Jumbotron>
             <form>
               <Input
-                value={this.state.queryTerm}
+                value={this.state.name}
                 onChange={this.handleInputChange}
-                name="queryTerm"
-                placeholder="Topic (required)"
+                name="name"
+                placeholder="Name (required)"
               />
               <Input
-                value={this.state.beginDate}
+                value={this.state.title}
                 onChange={this.handleInputChange}
-                name="beginDate"
-                placeholder="Begin Date (Optional - in YYYYMMDD)"
+                name="title"
+                placeholder="Title (required)"
               />
               <Input
-                value={this.state.endDate}
+                value={this.state.body}
                 onChange={this.handleInputChange}
-                name="endDate"
-                placeholder="End Date (Optional - in YYYYMMDD)"
+                name="description"
+                placeholder="What are you looking for? (required)"
               />
-              <FormBtn disabled={!this.state.queryTerm} onClick={this.handleFormSubmit}>
-                Submit Search
-              </FormBtn>
+              <button className="btn btn-primary requests" style={{float: "right"}} onClick={() => this.saveRequest({
+                name: this.state.name,
+                title: this.state.title, 
+                body: this.state.body
+              })}> Submit Request </button> 
             </form>
           </Col>
-          <Col size="md-9">
-            <Jumbotron>
-              <h1>Article Results</h1>
-            </Jumbotron>
-            {this.state.articles.length ? (
-              <List>
-                {this.state.articles.map(article => (
-                  <ListItem key={article._id}>
-                    <a href={article.web_url} target="_blank">
-                      <strong>{article.headline.main}</strong>
-                    </a>
-                    <br/>
-                    <span>Published on {article.pub_date}</span>
-                    <button className="btn btn-primary" style={{float: "right"}} onClick={() => this.saveArticle({
-                      title: article.headline.main,
-                      url: article.web_url, 
-                      date: article.pub_date
-                    })}> Save Article </button> 
-                  </ListItem>
-                ))}
-              </List>
-            ) : (
-              <h3>No Results to Display</h3>
-            )}
-          </Col>
+    
         </Row>
+      </Container>
     );
   }
 }

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 const Nav = () => (
   <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
     <Link className="navbar-brand" to="/">
-      NYT React App
+      GYFTY
     </Link>
     <button
       className="navbar-toggler"
@@ -19,14 +19,10 @@ const Nav = () => (
     </button>
     <div className="collapse navbar-collapse" id="navbarNav">
       <ul className="navbar-nav">
-        <li className="nav-item">
-          <Link className="nav-link" to="/">
-            Articles
-          </Link>
-        </li>
-        <li className="nav-item">
-          <Link className="nav-link" to="/saved">
-            Saved
+
+        <li className="requests">
+          <Link className="requests" to="/requests">
+            Requests
           </Link>
         </li>
       </ul>

@@ -18,8 +18,8 @@ module.exports = {
   create: function(req, res) {
     const article = {
       _id: req.body._id,
-      title: req.body.headline.main,
-
+      name: req.body.name,
+      title: req.body.title
     };
     db.Request
       .create(request)
