@@ -3,40 +3,40 @@ const db = require("../models");
 // Defining methods for the articleController
 module.exports = {
   findAll: function(req, res) {
-    db.Article
+    db.Request
       .find(req.query)
       .sort({ date: -1 })
-      .then(dbArticle => res.json(dbArticle))
+      .then(dbRequest => res.json(dbRequest))
       .catch(err => res.status(422).json(err));
   },
   findById: function(req, res) {
-    db.Article
+    db.Request
       .findById(req.params.id)
-      .then(dbArticle => res.json(dbArticle))
+      .then(dbRequest => res.json(dbRequest))
       .catch(err => res.status(422).json(err));
   },
   create: function(req, res) {
     const article = {
       _id: req.body._id,
       title: req.body.headline.main,
-      url: req.body.web_url
+
     };
-    db.Article
-      .create(article)
-      .then(dbArticle => res.json(dbArticle))
+    db.Request
+      .create(request)
+      .then(dbArticle => res.json(dbRequest))
       .catch(err => res.status(422).json(err));
   },
   update: function(req, res) {
-    db.Article
+    db.Request
       .findOneAndUpdate({ _id: req.params.id }, req.body)
-      .then(dbArticle => res.json(dbArticle))
+      .then(dbArticle => res.json(dbRequest))
       .catch(err => res.status(422).json(err));
   },
   remove: function(req, res) {
-    db.Article
+    db.Request
       .findById({ _id: req.params.id })
-      .then(dbArticle => dbArticle.remove())
-      .then(dbArticle => res.json(dbArticle))
+      .then(dbRequest => dbRequest.remove())
+      .then(dbRequest => res.json(dbRequest))
       .catch(err => res.status(422).json(err));
   }
 };
