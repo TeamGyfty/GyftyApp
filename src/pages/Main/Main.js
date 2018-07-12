@@ -68,7 +68,7 @@ class Main extends Component {
               <Input
                 value={this.state.body}
                 onChange={this.handleInputChange}
-                name="description"
+                name="body"
                 placeholder="What are you looking for? (required)"
               />
               <button className="btn btn-primary requests" style={{float: "right"}} onClick={() => this.saveRequest({
