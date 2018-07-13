@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
+    crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery.js"></script>
+  <script src="./join.js"></script>
+
+  <title>Gifty</title>
+
+</head>
+
+<body>
+
+  <div class="container" id="main-content">
+
+    <form class="signup page-form bg-light">
+      
+      <h5>Create an account </h5>
+      <div class="form-group">
+        <label for="username-input">Username</label>
+        <input class="form-control" id="username" type="text" placeholder="User Name">
+      </div>
+      <div class="form-group">
+        <label for="password-input">Password (must be at least 4 characters)</label>
+        <input class="form-control" id="password" type="password" placeholder="password">
+      </div>
+      <div class="form-group">
+        <label for="email-address">E-mail address</label>
+        <input class="form-control" id="email" type="email" placeholder="MyName@email.com">
+      </div>
+      <div style="display: none" id="alert" class="alert alert-danger" role="alert">
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        <span class="sr-only">Error:</span>
+        <span class="msg"></span>
+      </div>
+
+      <button type="submit" class="btn" id="add-user-btn">Sign Up</button>
+    </form>
+  </div>
+
+</body>
+
+</html>
