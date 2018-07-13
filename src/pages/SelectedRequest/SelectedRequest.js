@@ -9,13 +9,14 @@ import { Input, TextArea, FormBtn } from "../../components/Form";
 class SelectedRequest extends Component {
   state = {
     request: {},
-    responses: [],
-    comment: ""
+    response:{},
+    name: "",
+    url: "",
+    body: ""
   };
  
   componentDidMount() {
     this.loadRequest()
-    this.loadResponses(requestId)
   };
   
   loadRequest = () => {
@@ -24,20 +25,28 @@ class SelectedRequest extends Component {
     .catch(err => console.log(err));
   };
   
-  loadResponses = () => {
+  loadResponse = () => {
     let requestId = `${this.request._id}`;
-    API.getResposes(requestId)
-      .then(res =>this.setState({resposes: res.data}))
+    API.getRespose(requestId)
+      .then(res =>this.setState({respose: res.data}))
   };
-  saveComment = event => {
+  handleFormSubmit = event => {
     event.preventDefault();
     if (this.state.comment) {
-      API.postComment({
-      Response: this.state.comment
+      API.saveRespose({
+        name: this.state.name,
+        url: this.state.url,
+        body: this.state.body
     })
-      .then(res => this.loadBooks())
+      .then(res => this.loadRespose())
       .catch(err => console.log(err));   
     }
+  };
+  handleInputChange = event => {
+    const { name, value } = event.target;
+    this.setState({
+      [name]: value
+    });
   };
   render() {
     return (
@@ -48,29 +57,37 @@ class SelectedRequest extends Component {
               <h2>The Current Request is: ${this.state.request}</h2>
             </Jumbotron>
             {this.state.request ? (
-              <List>
-                {this.state.resposes.map(responses => (
-                  <ListItem key={request_id}>
-                      <p>
-                        {response.name} 
-                      </p>
-                      <p>
-                        {response.body} 
-                      </p>
-                      <p>
-                        {response.url} 
-                      </p>
-                  </ListItem>
-                ))}
-              </List>
+              
+               <form>
+                 <Input
+                   value={this.state.name}
+                   onChange={this.handleInputChange}
+                   name="name"
+                   placeholder="Name (required)"
+                 />
+                 <Input
+                   value={this.state.url}
+                   onChange={this.handleInputChange}
+                   name="url"
+                   placeholder="url"
+                 />
+                 <TextArea
+                   value={this.state.body}
+                   onChange={this.handleInputChange}
+                   name="body"
+                   placeholder="Description (Optional)"
+                 />
+                 <FormBtn
+                   disabled={!(this.state.name && this.state.body)}
+                   onClick={this.handleFormSubmit}
+                 >
+                   Submit Book
+                 </FormBtn>
+               </form>
             ) : (
-              <h3>No responses to Display</h3>
+              <h3>No Requests to Display</h3>
             )}
-            <form>
-              <Input name="name" placeholder="Name (required)" />
-              <TextArea name="comment" placeholder="Comment (Optional)" />
-              <FormBtn onClick = {(this.saveComment)}>Submit</FormBtn>
-            </form>
+           
           </Col>        
         </Row>
       </Container>
