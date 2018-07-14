@@ -8,7 +8,7 @@ import { Input, TextArea, FormBtn } from "../../components/Form";
 
 class SelectedRequest extends Component {
   state = {
-    request: {},
+    requests: {},
     response:{},
     name: "",
     url: "",
@@ -20,13 +20,13 @@ class SelectedRequest extends Component {
   };
   
   loadRequest = () => {
-    API.getRequest()
-    .then(res => this.setState({ request: res.data }))
+    API.getRequest(this.props.request._id)
+    .then(res => this.setState({ requests: res.data }))
     .catch(err => console.log(err));
   };
   
   loadResponse = () => {
-    let requestId = `${this.request._id}`;
+    let requestId = `${this.requests._id}`;
     API.getRespose(requestId)
       .then(res =>this.setState({respose: res.data}))
   };

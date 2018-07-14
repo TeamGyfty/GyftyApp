@@ -6,10 +6,11 @@ import {List, ListItem} from '../../components/List';
 import API from '../../utils/API';
 
 class Requests extends Component {
-  state = {
-    requests: []
-  };
-
+  constructor(props) {
+    state = {
+      requests: []
+    };
+  }
   componentDidMount() {
     this.loadRequests();
   }
